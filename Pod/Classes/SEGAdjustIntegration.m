@@ -85,6 +85,17 @@
     return nil;
 }
 
+- (void)identify:(SEGIdentifyPayload *)payload
+{
+    if (payload.userId != nil && [payload.userId length] != 0) {
+        [Adjust addSessionPartnerParameter:@"user_id" value:payload.userId];
+    }
+
+    if (payload.anonymousId != nil && [payload.anonymousId length] != 0) {
+        [Adjust addSessionPartnerParameter:@"anonymous_id" value:payload.anonymousId];
+    }
+}
+
 - (void)track:(SEGTrackPayload *)payload
 {
     NSString *token = [self getMappedCustomEventToken:payload.event];
