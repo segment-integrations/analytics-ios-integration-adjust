@@ -126,6 +126,11 @@
     }
 }
 
+- (void)reset
+{
+    [Adjust resetSessionPartnerParameters];
+}
+
 - (void)registerForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
                                               options:(NSDictionary *)options
 {
