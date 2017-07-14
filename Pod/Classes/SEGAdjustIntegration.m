@@ -141,14 +141,14 @@
 {
     [self.analytics track:@"Install Attributed" properties:@{
         @"provider" : @"Adjust",
-        @"trackerToken" : attribution.trackerToken,
-        @"trackerName" : attribution.trackerName,
+        @"trackerToken" : attribution.trackerToken ?: @"",
+        @"trackerName" : attribution.trackerName ?: @"",
         @"campaign" : @{
-            @"source" : attribution.network,
-            @"name" : attribution.campaign,
-            @"content" : attribution.clickLabel,
-            @"adCreative" : attribution.creative,
-            @"adGroup" : attribution.adgroup,
+            @"source" : attribution.network ?: @"",
+            @"name" : attribution.campaign ?: @"",
+            @"content" : attribution.clickLabel ?: @"",
+            @"adCreative" : attribution.creative ?: @"",
+            @"adGroup" : attribution.adgroup ?: @"",
         }
     }];
 }
