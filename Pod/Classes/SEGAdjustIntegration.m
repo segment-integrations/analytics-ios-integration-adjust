@@ -1,4 +1,5 @@
 #import "SEGAdjustIntegration.h"
+#import <Analytics/SEGAnalyticsUtils.h>
 
 
 @implementation SEGAdjustIntegration
@@ -87,18 +88,34 @@
 
 - (void)identify:(SEGIdentifyPayload *)payload
 {
-    if (payload.userId != nil && [payload.userId length] != 0) {
-        [Adjust addSessionPartnerParameter:@"user_id" value:payload.userId];
+    self.segmentUserId = payload.userId;
+    if (self.segmentUserId != nil && [self.segmentUserId length] != 0) {
+        [Adjust addSessionPartnerParameter:@"user_id" value:self.segmentUserId];
+        SEGLog(@"[Adjust addSessionPartnerParameter:%@]", self.segmentUserId);
     }
 
     if (payload.anonymousId != nil && [payload.anonymousId length] != 0) {
         [Adjust addSessionPartnerParameter:@"anonymous_id" value:payload.anonymousId];
+        SEGLog(@"[Adjust addSessionPartnerParameter:%@]", payload.anonymousId);
     }
 }
 
 - (void)track:(SEGTrackPayload *)payload
 {
+    if (self.segmentUserId != nil && [self.segmentUserId length] != 0) {
+        [Adjust addSessionPartnerParameter:@"user_id" value:self.segmentUserId];
+        SEGLog(@"[Adjust addSessionPartnerParameter:%@]", self.segmentUserId);
+    }
+
+    NSString *segmentAnonymousId = [[SEGAnalytics sharedAnalytics] getAnonymousId];
+
+    if (segmentAnonymousId != nil && [segmentAnonymousId length] != 0) {
+        [Adjust addSessionPartnerParameter:@"anonymous_id" value:segmentAnonymousId];
+        SEGLog(@"[Adjust addSessionPartnerParameter:%@]", segmentAnonymousId);
+    }
+
     NSString *token = [self getMappedCustomEventToken:payload.event];
+
     if (token) {
         ADJEvent *event = [ADJEvent eventWithEventToken:token];
 
