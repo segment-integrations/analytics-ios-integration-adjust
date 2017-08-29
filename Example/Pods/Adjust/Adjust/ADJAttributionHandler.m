@@ -24,7 +24,6 @@ static NSString   * const kAttributionTimerName   = @"Attribution timer";
 @property (nonatomic, strong) ADJTimerOnce *attributionTimer;
 @property (nonatomic, strong) ADJActivityPackage * attributionPackage;
 @property (nonatomic, assign) BOOL paused;
-@property (nonatomic, assign) BOOL hasNeedsResponseDelegate;
 
 @end
 
@@ -34,19 +33,16 @@ static const double kRequestTimeout = 60; // 60 seconds
 
 + (id<ADJAttributionHandler>)handlerWithActivityHandler:(id<ADJActivityHandler>)activityHandler
                                  withAttributionPackage:(ADJActivityPackage *) attributionPackage
-                                          startsSending:(BOOL)startsSending
-                          hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
+                                          startsSending:(BOOL)startsSending;
 {
     return [[ADJAttributionHandler alloc] initWithActivityHandler:activityHandler
                                            withAttributionPackage:attributionPackage
-                                                    startsSending:startsSending
-                                    hasAttributionChangedDelegate:hasAttributionChangedDelegate];
+                                                    startsSending:startsSending];
 }
 
 - (id)initWithActivityHandler:(id<ADJActivityHandler>) activityHandler
        withAttributionPackage:(ADJActivityPackage *) attributionPackage
-                startsSending:(BOOL)startsSending
-hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
+                startsSending:(BOOL)startsSending;
 {
     self = [super init];
     if (self == nil) return nil;
@@ -56,7 +52,6 @@ hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
     self.logger = ADJAdjustFactory.logger;
     self.attributionPackage = attributionPackage;
     self.paused = !startsSending;
-    self.hasNeedsResponseDelegate = hasAttributionChangedDelegate;
     __weak __typeof__(self) weakSelf = self;
     self.attributionTimer = [ADJTimerOnce timerWithBlock:^{
         __typeof__(self) strongSelf = weakSelf;
@@ -76,6 +71,15 @@ hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
                      block:^(ADJAttributionHandler* selfI) {
                          [selfI checkSessionResponseI:selfI
                                   sessionResponseData:sessionResponseData];
+                     }];
+}
+
+- (void)checkSdkClickResponse:(ADJSdkClickResponseData *)sdkClickResponseData {
+    [ADJUtil launchInQueue:self.internalQueue
+                selfInject:self
+                     block:^(ADJAttributionHandler* selfI) {
+                         [selfI checkSdkClickResponseI:selfI
+                                  sdkClickResponseData:sdkClickResponseData];
                      }];
 }
 
@@ -115,6 +119,13 @@ hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
     [selfI.activityHandler launchSessionResponseTasks:sessionResponseData];
 }
 
+- (void)checkSdkClickResponseI:(ADJAttributionHandler*)selfI
+          sdkClickResponseData:(ADJSdkClickResponseData *)sdkClickResponseData {
+    [selfI checkAttributionI:selfI responseData:sdkClickResponseData];
+
+    [selfI.activityHandler launchSdkClickResponseTasks:sdkClickResponseData];
+}
+
 - (void)checkAttributionResponseI:(ADJAttributionHandler*)selfI
                   attributionResponseData:(ADJAttributionResponseData *)attributionResponseData {
     [selfI checkAttributionI:selfI responseData:attributionResponseData];
@@ -144,7 +155,7 @@ hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
     [selfI.activityHandler setAskingAttribution:NO];
 
     NSDictionary * jsonAttribution = [responseData.jsonResponse objectForKey:@"attribution"];
-    responseData.attribution = [ADJAttribution dataWithJsonDict:jsonAttribution];
+    responseData.attribution = [ADJAttribution dataWithJsonDict:jsonAttribution adid:responseData.adid];
 }
 
 - (void)checkDeeplinkI:(ADJAttributionHandler*)selfI
@@ -167,9 +178,6 @@ attributionResponseData:(ADJAttributionResponseData *)attributionResponseData {
 }
 
 - (void)requestAttributionI:(ADJAttributionHandler*)selfI {
-    if (!selfI.hasNeedsResponseDelegate) {
-        return;
-    }
     if (selfI.paused) {
         [selfI.logger debug:@"Attribution handler is paused"];
         return;

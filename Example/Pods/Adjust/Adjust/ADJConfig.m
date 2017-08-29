@@ -15,7 +15,6 @@
 @interface ADJConfig()
 
 @property (nonatomic, weak) id<ADJLogger> logger;
-@property (nonatomic, assign) BOOL allowSuppressLogLevel;
 
 @end
 
@@ -48,10 +47,13 @@
     self = [super init];
     if (self == nil) return nil;
 
-    self.allowSuppressLogLevel = allowSuppressLogLevel;
     self.logger = ADJAdjustFactory.logger;
     // default values
-    [self setLogLevel:ADJLogLevelInfo environment:environment];
+    if (allowSuppressLogLevel && [ADJEnvironmentProduction isEqualToString:environment]) {
+        [self setLogLevel:ADJLogLevelSuppress environment:environment];
+    } else {
+        [self setLogLevel:ADJLogLevelInfo environment:environment];
+    }
 
     if (![self checkEnvironment:environment]) return self;
     if (![self checkAppToken:appToken]) return self;
@@ -59,8 +61,6 @@
     _appToken = appToken;
     _environment = environment;
     // default values
-    _hasResponseDelegate = NO;
-    _hasAttributionChangedDelegate = NO;
     self.eventBufferingEnabled = NO;
 
     return self;
@@ -71,28 +71,14 @@
 }
 
 - (void)setLogLevel:(ADJLogLevel)logLevel
-        environment:(NSString *)environment{
-    if ([environment isEqualToString:ADJEnvironmentProduction]) {
-        if (self.allowSuppressLogLevel) {
-            _logLevel = ADJLogLevelSuppress;
-        } else {
-            _logLevel = ADJLogLevelAssert;
-        }
-    } else {
-        if (!self.allowSuppressLogLevel &&
-            logLevel == ADJLogLevelSuppress) {
-            _logLevel = ADJLogLevelAssert;
-        } else {
-            _logLevel = logLevel;
-        }
-    }
-    [self.logger setLogLevel:self.logLevel];
+        environment:(NSString *)environment
+{
+    [self.logger setLogLevel:logLevel
+     isProductionEnvironment:[ADJEnvironmentProduction isEqualToString:environment]];
 }
 
-
 - (void)setDelegate:(NSObject<AdjustDelegate> *)delegate {
-    _hasResponseDelegate = NO;
-    _hasAttributionChangedDelegate = NO;
+    BOOL hasResponseDelegate = NO;
     BOOL implementsDeeplinkCallback = NO;
 
     if ([ADJUtil isNull:delegate]) {
@@ -104,32 +90,31 @@
     if ([delegate respondsToSelector:@selector(adjustAttributionChanged:)]) {
         [self.logger debug:@"Delegate implements adjustAttributionChanged:"];
 
-        _hasResponseDelegate = YES;
-        _hasAttributionChangedDelegate = YES;
+        hasResponseDelegate = YES;
     }
 
     if ([delegate respondsToSelector:@selector(adjustEventTrackingSucceeded:)]) {
         [self.logger debug:@"Delegate implements adjustEventTrackingSucceeded:"];
 
-        _hasResponseDelegate = YES;
+        hasResponseDelegate = YES;
     }
 
     if ([delegate respondsToSelector:@selector(adjustEventTrackingFailed:)]) {
         [self.logger debug:@"Delegate implements adjustEventTrackingFailed:"];
 
-        _hasResponseDelegate = YES;
+        hasResponseDelegate = YES;
     }
 
     if ([delegate respondsToSelector:@selector(adjustSessionTrackingSucceeded:)]) {
         [self.logger debug:@"Delegate implements adjustSessionTrackingSucceeded:"];
 
-        _hasResponseDelegate = YES;
+        hasResponseDelegate = YES;
     }
 
     if ([delegate respondsToSelector:@selector(adjustSessionTrackingFailed:)]) {
         [self.logger debug:@"Delegate implements adjustSessionTrackingFailed:"];
 
-        _hasResponseDelegate = YES;
+        hasResponseDelegate = YES;
     }
 
     if ([delegate respondsToSelector:@selector(adjustDeeplinkResponse:)]) {
@@ -139,7 +124,7 @@
         implementsDeeplinkCallback = YES;
     }
 
-    if (!(self.hasResponseDelegate || implementsDeeplinkCallback)) {
+    if (!(hasResponseDelegate || implementsDeeplinkCallback)) {
         [self.logger error:@"Delegate does not implement any optional method"];
         _delegate = nil;
         return;
@@ -155,10 +140,10 @@
         return NO;
     }
     if ([environment isEqualToString:ADJEnvironmentSandbox]) {
-        [self.logger assert:@"SANDBOX: Adjust is running in Sandbox mode. Use this setting for testing. Don't forget to set the environment to `production` before publishing"];
+        [self.logger warnInProduction:@"SANDBOX: Adjust is running in Sandbox mode. Use this setting for testing. Don't forget to set the environment to `production` before publishing"];
         return YES;
     } else if ([environment isEqualToString:ADJEnvironmentProduction]) {
-        [self.logger assert:@"PRODUCTION: Adjust is running in Production mode. Use this setting only for the build that you want to publish. Set the environment to `sandbox` if you want to test your app!"];
+        [self.logger warnInProduction:@"PRODUCTION: Adjust is running in Production mode. Use this setting only for the build that you want to publish. Set the environment to `sandbox` if you want to test your app!"];
         return YES;
     }
     [self.logger error:@"Unknown environment '%@'", environment];
@@ -191,8 +176,6 @@
         copy.sdkPrefix = [self.sdkPrefix copyWithZone:zone];
         copy.defaultTracker = [self.defaultTracker copyWithZone:zone];
         copy.eventBufferingEnabled = self.eventBufferingEnabled;
-        copy->_hasResponseDelegate = self.hasResponseDelegate;
-        copy->_hasAttributionChangedDelegate = self.hasAttributionChangedDelegate;
         copy.sendInBackground = self.sendInBackground;
         copy.delayStart = self.delayStart;
         copy.userAgent = [self.userAgent copyWithZone:zone];

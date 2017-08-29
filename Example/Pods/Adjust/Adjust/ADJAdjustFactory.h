@@ -22,8 +22,10 @@
                                             startsSending:(BOOL)startsSending;
 + (id<ADJRequestHandler>)requestHandlerForPackageHandler:(id<ADJPackageHandler>)packageHandler;
 + (id<ADJActivityHandler>)activityHandlerWithConfig:(ADJConfig *)adjustConfig
-                     sessionParametersActionsArray:(NSArray*)sessionParametersActionsArray;
-+ (id<ADJSdkClickHandler>)sdkClickHandlerWithStartsPaused:(BOOL)startsSending;
+                     sessionParametersActionsArray:(NSArray*)sessionParametersActionsArray
+                                        deviceToken:(NSData*)deviceToken;
++ (id<ADJSdkClickHandler>)sdkClickHandlerWithStartsPaused:(id<ADJActivityHandler>)activityHandler
+                                            startsSending:(BOOL)startsSending;
 
 + (id<ADJLogger>)logger;
 + (double)sessionInterval;
@@ -35,8 +37,7 @@
 
 + (id<ADJAttributionHandler>)attributionHandlerForActivityHandler:(id<ADJActivityHandler>)activityHandler
                                            withAttributionPackage:(ADJActivityPackage *) attributionPackage
-                                                    startsSending:(BOOL)startsSending
-                                    hasAttributionChangedDelegate:(BOOL)hasAttributionChangedDelegate;
+                                                    startsSending:(BOOL)startsSending;
 + (BOOL)testing;
 + (NSTimeInterval)maxDelayStart;
 

@@ -18,6 +18,9 @@
 @property (nonatomic, copy) NSString *deviceToken;
 @property (nonatomic, assign) BOOL updatePackages;
 
+@property (nonatomic, copy) NSString *adid;
+@property (nonatomic, strong) NSDictionary *attributionDetails;
+
 // Global counters
 @property (nonatomic, assign) int eventCount;
 @property (nonatomic, assign) int sessionCount;
@@ -37,6 +40,8 @@
 @property (nonatomic, assign) double lastInterval;
 
 - (void)resetSessionAttributes:(double)now;
+
++ (void)saveAppToken:(NSString *)appTokenToSave;
 
 // Transaction ID management
 - (void)addTransactionId:(NSString *)transactionId;
