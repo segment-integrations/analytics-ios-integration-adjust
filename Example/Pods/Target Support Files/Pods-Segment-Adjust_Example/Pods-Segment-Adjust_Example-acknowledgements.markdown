@@ -3,7 +3,7 @@ This application makes use of the following third party libraries:
 
 ## Adjust
 
-Copyright (c) 2012-2014 adjust GmbH, 
+Copyright (c) 2012-2017 adjust GmbH, 
 http://www.adjust.com
 
 Permission is hereby granted, free of charge, to any person obtaining
@@ -30,7 +30,7 @@ WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 
 The MIT License (MIT)
 
-Copyright (c) 2014 Segment.io, Inc.
+Copyright (c) 2016 Segment.io, Inc.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
