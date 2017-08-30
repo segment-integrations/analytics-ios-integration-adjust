@@ -1,4 +1,5 @@
 #import "SEGAdjustIntegration.h"
+#import <Analytics/SEGAnalyticsUtils.h>
 
 
 @implementation SEGAdjustIntegration
@@ -98,6 +99,12 @@
 
 - (void)track:(SEGTrackPayload *)payload
 {
+    NSString *segmentAnonymousId = [[SEGAnalytics sharedAnalytics] getAnonymousId];
+    if (segmentAnonymousId != nil && [segmentAnonymousId length] != 0) {
+        [Adjust addSessionPartnerParameter:@"anonymous_id" value:segmentAnonymousId];
+        SEGLog(@"[Adjust addSessionPartnerParameter:%@]", segmentAnonymousId);
+    }
+
     NSString *token = [self getMappedCustomEventToken:payload.event];
     if (token) {
         ADJEvent *event = [ADJEvent eventWithEventToken:token];
