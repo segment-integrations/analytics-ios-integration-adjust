@@ -248,7 +248,11 @@
 				LastUpgradeCheck = 0730;
 				ORGANIZATIONNAME = "Prateek Srivastava";
 				TargetAttributes = {
+					6003F589195388D20070C39A = {
+						DevelopmentTeam = ENLA8E7Z4L;
+					};
 					6003F5AD195388D20070C39A = {
+						DevelopmentTeam = ENLA8E7Z4L;
 						TestTargetID = 6003F589195388D20070C39A;
 					};
 				};
@@ -515,6 +519,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = ENLA8E7Z4L;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Segment-Adjust/Segment-Adjust-Prefix.pch";
 				INFOPLIST_FILE = "Segment-Adjust/Segment-Adjust-Info.plist";
@@ -532,6 +537,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				DEVELOPMENT_TEAM = ENLA8E7Z4L;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Segment-Adjust/Segment-Adjust-Prefix.pch";
 				INFOPLIST_FILE = "Segment-Adjust/Segment-Adjust-Info.plist";
@@ -548,6 +554,7 @@
 			baseConfigurationReference = 25D04BDA6159E66FB7B438D6 /* Pods-Segment-Adjust_Tests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = ENLA8E7Z4L;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
@@ -568,6 +575,7 @@
 			baseConfigurationReference = 093B307376EB7340670E8C1C /* Pods-Segment-Adjust_Tests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
+				DEVELOPMENT_TEAM = ENLA8E7Z4L;
 				FRAMEWORK_SEARCH_PATHS = "";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "Tests/Tests-Prefix.pch";
