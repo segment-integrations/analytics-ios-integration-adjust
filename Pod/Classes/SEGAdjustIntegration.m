@@ -30,10 +30,9 @@
             [adjustConfig setDelegate:self];
         }
 
-        // The maximum delay start time of the adjust SDK is 10 seconds.
         if ([self setDelay]) {
             double delayTime = [settings[@"delayTime"] doubleValue];
-            [adjustConfig setDelayStart:MIN(delayTime, 10)];
+            [adjustConfig setDelayStart:delayTime];
         }
 
         [Adjust appDidLaunch:adjustConfig];
