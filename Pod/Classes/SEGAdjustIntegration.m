@@ -18,14 +18,22 @@
         if ([self setEnvironmentProduction]) {
             environment = ADJEnvironmentProduction;
         }
+
         ADJConfig *adjustConfig = [ADJConfig configWithAppToken:appToken
                                                     environment:environment];
 
         if ([self setEventBufferingEnabled]) {
             [adjustConfig setEventBufferingEnabled:YES];
         }
+
         if ([self trackAttributionData]) {
             [adjustConfig setDelegate:self];
+        }
+
+        double delayTime = [settings[@"delayTime"] doubleValue];
+        // The maximum delay start time of the adjust SDK is 10 seconds.
+        if ([self setDelay] && (delayTime < 10.00)) {
+            [adjustConfig setDelayStart:delayTime];
         }
 
         [Adjust appDidLaunch:adjustConfig];
@@ -183,5 +191,9 @@
     return [(NSNumber *)[self.settings objectForKey:@"trackAttributionData"] boolValue];
 }
 
+- (BOOL)setDelay
+{
+    return [(NSNumber *)[self.settings objectForKey:@"setDelay"] boolValue];
+}
 
 @end
