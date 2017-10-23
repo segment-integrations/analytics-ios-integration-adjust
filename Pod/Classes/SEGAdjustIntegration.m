@@ -29,9 +29,10 @@
         if ([self trackAttributionData]) {
             [adjustConfig setDelegate:self];
         }
-        double delayTime = [settings[@"delayTime"] doubleValue];
+
         // The maximum delay start time of the adjust SDK is 10 seconds.
         if ([self setDelay]) {
+            double delayTime = [settings[@"delayTime"] doubleValue];
             [adjustConfig setDelayStart:MIN(delayTime, 10)];
         }
 
