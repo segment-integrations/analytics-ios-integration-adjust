@@ -1,5 +1,6 @@
 # Analytics
 
+[![CircleCI](https://circleci.com/gh/segment-integrations/analytics-ios-integration-adjust.svg?style=svg)](https://circleci.com/gh/segment-integrations/analytics-ios-integration-adjust)
 [![Version](https://img.shields.io/cocoapods/v/Segment-Adjust.svg?style=flat)](http://cocoapods.org/pods/Segment-Adjust)
 [![License](https://img.shields.io/cocoapods/l/Segment-Adjust.svg?style=flat)](http://cocoapods.org/pods/Segment-Adjust)
 
