@@ -14,6 +14,29 @@ To install the Segment-Adjust integration, simply add this line to your [CocoaPo
 pod "Segment-Adjust"
 ```
 
+### Troubleshooting
+
+For users who are unable to bundle static libraries as dependencies (Swift project for example) you can choose `StaticLibWorkaround` subspec, but be sure to include `Adjust` to your Podfile:
+
+Example:
+
+```ruby
+  pod 'Adjust'
+  pod 'Segment-Adjust/StaticLibWorkaround'
+```
+
+Next step, add manually 4 files to your project (located under `<YOUR_APP>/Pods/Segment-Adjust/Pod/Classes`):
+
+ - `SEGAdjustIntegration.h`
+ - `SEGAdjustIntegration.m`
+ - `SEGAdjustIntegrationFactory.h`
+ - `SEGAdjustIntegrationFactory.m`
+
+Xcode will ask you to generate `<YOUR_APP_NAME>-Bridging-Header.h`
+Add to this file `#import "SEGAdjustIntegrationFactory.h"`
+
+For more details follow the instructions from Apple [here](https://developer.apple.com/library/content/documentation/Swift/Conceptual/BuildingCocoaApps/MixandMatch.html).
+
 ## Usage
 
 After adding the dependency, you must register the integration with our SDK.  To do this, import the Adjust integration in your `AppDelegate`:

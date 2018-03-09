@@ -23,4 +23,12 @@ Pod::Spec.new do |s|
 
   s.dependency 'Analytics', '~> 3.0'
   s.dependency 'Adjust', '~> 4.10'
+
+  s.subspec 'StaticLibWorkaround' do |workaround|
+    # For users who are unable to bundle static libraries as dependencies
+    # you can choose this subspec, but be sure to include the following in your Podfile:
+    # pod 'Adjust','~> 4.10'
+    # Please manually add the following file preserved by Cocoapods to your xcodeproj file
+    workaround.preserve_paths = 'Pod/Classes/**/*'
+  end
 end
