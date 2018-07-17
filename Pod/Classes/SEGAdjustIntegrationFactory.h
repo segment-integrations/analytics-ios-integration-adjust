@@ -5,5 +5,6 @@
 @interface SEGAdjustIntegrationFactory : NSObject <SEGIntegrationFactory>
 
 + (instancetype)instance;
++ (instancetype)instanceWithAppSecret:(nullable NSArray<NSNumber *> *)secret;
 
 @end

@@ -6,7 +6,7 @@
 
 #pragma mark - Initialization
 
-- (instancetype)initWithSettings:(NSDictionary *)settings withAnalytics:(SEGAnalytics *)analytics
+- (instancetype)initWithAppSecret:(nullable NSArray<NSNumber *> *)secret settings:(NSDictionary *)settings analytics:(SEGAnalytics *)analytics
 {
     if (self = [super init]) {
         self.settings = settings;
@@ -21,6 +21,21 @@
 
         ADJConfig *adjustConfig = [ADJConfig configWithAppToken:appToken
                                                     environment:environment];
+
+        if (secret != nil) {
+            NSAssert(secret.count == 5, @"App secret must contain a secret id followed by four info values");
+
+            if ([adjustConfig respondsToSelector: @selector(setAppSecret:info1:info2:info3:info4:)]) {
+
+                [adjustConfig setAppSecret:secret[0].unsignedIntegerValue
+                                     info1:secret[1].unsignedIntegerValue
+                                     info2:secret[2].unsignedIntegerValue
+                                     info3:secret[3].unsignedIntegerValue
+                                     info4:secret[4].unsignedIntegerValue];
+            } else {
+                SEGLog(@"App secret not supported by current Adjust version");
+            }
+        }
 
         if ([self setEventBufferingEnabled]) {
             [adjustConfig setEventBufferingEnabled:YES];
