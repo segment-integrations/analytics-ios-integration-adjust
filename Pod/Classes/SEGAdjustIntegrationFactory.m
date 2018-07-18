@@ -1,16 +1,17 @@
 #import "SEGAdjustIntegrationFactory.h"
 #import "SEGAdjustIntegration.h"
+#import "SEGAdjustAppSecret.h"
 
 
 @implementation SEGAdjustIntegrationFactory {
-    NSArray<NSNumber *> *appSecret;
+    SEGAdjustAppSecret *appSecret;
 }
 
 + (instancetype)instance {
     return [self instanceWithAppSecret: nil];
 }
 
-+ (instancetype)instanceWithAppSecret: (nullable NSArray<NSNumber *> *)secret
++ (instancetype)instanceWithAppSecret: (nullable SEGAdjustAppSecret *)secret
 {
     static dispatch_once_t once;
     static SEGAdjustIntegrationFactory *sharedInstance;
@@ -20,7 +21,7 @@
     return sharedInstance;
 }
 
-- (instancetype)initWithAppSecret: (NSArray<NSNumber *> *)secret
+- (instancetype)initWithAppSecret: (SEGAdjustAppSecret *)secret
 {
     self = [super init];
     appSecret = secret;
