@@ -2,6 +2,14 @@
 #import "SEGAdjustAppSecret.h"
 #import <Analytics/SEGAnalyticsUtils.h>
 
+@interface ADJConfig ()
+- (void)setAppSecret:(NSUInteger)secretId
+               info1:(NSUInteger)info1
+               info2:(NSUInteger)info2
+               info3:(NSUInteger)info3
+               info4:(NSUInteger)info4;
+@end
+
 
 @implementation SEGAdjustIntegration
 
