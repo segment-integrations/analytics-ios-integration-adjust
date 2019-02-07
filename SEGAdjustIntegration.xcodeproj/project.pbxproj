@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		C38C3254220C6D3A00C77E2B /* SEGAdjustIntegrationFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = C38C324F220C6D3A00C77E2B /* SEGAdjustIntegrationFactory.h */; };
+		C38C3254220C6D3A00C77E2B /* SEGAdjustIntegrationFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = C38C324F220C6D3A00C77E2B /* SEGAdjustIntegrationFactory.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		C38C3257220C6D3A00C77E2B /* SEGAdjustIntegrationFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = C38C3252220C6D3A00C77E2B /* SEGAdjustIntegrationFactory.m */; };
 		C38C3258220C6D3A00C77E2B /* SEGAdjustIntegration.m in Sources */ = {isa = PBXBuildFile; fileRef = C38C3253220C6D3A00C77E2B /* SEGAdjustIntegration.m */; };
 		C38C325C220C6E9600C77E2B /* AdjustSdk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C38C325A220C6E9600C77E2B /* AdjustSdk.framework */; };
@@ -209,6 +209,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = dwarf;
+				DEFINES_MODULE = YES;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
@@ -271,6 +272,7 @@
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEFINES_MODULE = YES;
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;

@@ -1,5 +1,6 @@
 #import <Foundation/Foundation.h>
 #import <Analytics/SEGAnalytics.h>
+#import "SEGAdjustIntegrationFactory.h"
 
 #ifdef CARTHAGE_BUILD
     /* This header is used for XCode & Carthage build because when using adjust
