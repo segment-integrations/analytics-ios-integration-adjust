@@ -145,8 +145,7 @@
     [Adjust resetSessionPartnerParameters];
 }
 
-- (void)registerForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
-                                              options:(NSDictionary *)options
+- (void)registeredForRemoteNotificationsWithDeviceToken:(NSData *)deviceToken
 {
     [Adjust setDeviceToken:deviceToken];
 }
