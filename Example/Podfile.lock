@@ -4,7 +4,7 @@ PODS:
   - Adjust/Core (4.18.2)
   - Analytics (3.6.9)
   - Expecta (1.0.6)
-  - Segment-Adjust (1.1.5-beta):
+  - Segment-Adjust (2.0.0):
     - Adjust (~> 4.18)
     - Analytics (~> 3.0)
   - Specta (1.0.7)
@@ -15,7 +15,7 @@ DEPENDENCIES:
   - Specta
 
 SPEC REPOS:
-  https://github.com/cocoapods/specs.git:
+  trunk:
     - Adjust
     - Analytics
     - Expecta
@@ -29,9 +29,9 @@ SPEC CHECKSUMS:
   Adjust: 1fda924c9a84d738301c20cf147db0ad58c50f4e
   Analytics: 6541ce337e99d9f7a2240a8b3953940a7be5f998
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
-  Segment-Adjust: 42b03f04feaa87a4f46e95307d2b43e67022ee69
+  Segment-Adjust: a5464ded762deb6e92d7b769c45523809076fa8a
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
 PODFILE CHECKSUM: 6057868ba6813120a3ab5ffee3b33af7e280bbd5
 
-COCOAPODS: 1.7.3
+COCOAPODS: 1.8.4
