@@ -3,16 +3,29 @@
 [![CircleCI](https://circleci.com/gh/segment-integrations/analytics-ios-integration-adjust.svg?style=svg)](https://circleci.com/gh/segment-integrations/analytics-ios-integration-adjust)
 [![Version](https://img.shields.io/cocoapods/v/Segment-Adjust.svg?style=flat)](http://cocoapods.org/pods/Segment-Adjust)
 [![License](https://img.shields.io/cocoapods/l/Segment-Adjust.svg?style=flat)](http://cocoapods.org/pods/Segment-Adjust)
+[![Carthage compatible](https://img.shields.io/badge/Carthage-compatible-4BC51D.svg?style=flat)](https://github.com/Carthage/Carthage)
 
 Adjust integration for analytics-ios.
 
 ## Installation
 
+### Cocoapods
 To install the Segment-Adjust integration, simply add this line to your [CocoaPods](http://cocoapods.org) `Podfile`:
 
 ```ruby
 pod "Segment-Adjust"
 ```
+
+### Carthage
+Or add this to your [Carthage](https://github.com/Carthage/Carthage) `Cartfile`:
+
+```ruby
+github "segment-integrations/analytics-ios-integration-adjust"
+```
+
+In the Xcode project, add a preprocessor macro `CARTHAGE_BUILD=1` to all targets and configurations.
+This is necessary because Adjust uses different import statements depending on if it has been added
+via Carthage or Cocoapods.
 
 ## Usage
 
