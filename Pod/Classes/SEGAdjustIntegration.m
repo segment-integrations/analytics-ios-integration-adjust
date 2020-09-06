@@ -1,12 +1,21 @@
 #import "SEGAdjustIntegration.h"
+#import "SEGAdjustAppSecret.h"
 #import <Analytics/SEGAnalyticsUtils.h>
+
+@interface ADJConfig ()
+- (void)setAppSecret:(NSUInteger)secretId
+               info1:(NSUInteger)info1
+               info2:(NSUInteger)info2
+               info3:(NSUInteger)info3
+               info4:(NSUInteger)info4;
+@end
 
 
 @implementation SEGAdjustIntegration
 
 #pragma mark - Initialization
 
-- (instancetype)initWithSettings:(NSDictionary *)settings withAnalytics:(SEGAnalytics *)analytics
+- (instancetype)initWithAppSecret:(nullable SEGAdjustAppSecret *)secret settings:(NSDictionary *)settings analytics:(SEGAnalytics *)analytics
 {
     if (self = [super init]) {
         self.settings = settings;
@@ -21,6 +30,19 @@
 
         ADJConfig *adjustConfig = [ADJConfig configWithAppToken:appToken
                                                     environment:environment];
+
+        if (secret != nil) {
+            if ([adjustConfig respondsToSelector: @selector(setAppSecret:info1:info2:info3:info4:)]) {
+
+                [adjustConfig setAppSecret:secret.ID
+                                     info1:secret.info1
+                                     info2:secret.info2
+                                     info3:secret.info3
+                                     info4:secret.info4];
+            } else {
+                SEGLog(@"App secret not supported by current Adjust version");
+            }
+        }
 
         if ([self setEventBufferingEnabled]) {
             [adjustConfig setEventBufferingEnabled:YES];

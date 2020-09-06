@@ -8,6 +8,6 @@
 @property (nonatomic, strong) NSDictionary *settings;
 @property (nonatomic, strong) SEGAnalytics *analytics;
 
-- (instancetype)initWithSettings:(NSDictionary *)settings withAnalytics:(SEGAnalytics *)analytics;
+- (instancetype)initWithAppSecret:(nullable NSArray<NSNumber *> *)secret settings:(NSDictionary *)settings analytics:(SEGAnalytics *)analytics;
 
 @end
