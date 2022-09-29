@@ -127,6 +127,7 @@
         for (NSString *key in payload.properties) {
             NSString *value = [NSString stringWithFormat:@"%@", [payload.properties objectForKey:key]];
             [event addCallbackParameter:key value:value];
+            [event addPartnerParameter:key value:value];
         }
 
         // Track revenue specifically

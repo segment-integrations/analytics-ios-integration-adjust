@@ -1,11 +1,11 @@
 PODS:
-  - Adjust (4.28.0):
-    - Adjust/Core (= 4.28.0)
-  - Adjust/Core (4.28.0)
+  - Adjust (4.29.6):
+    - Adjust/Core (= 4.29.6)
+  - Adjust/Core (4.29.6)
   - Analytics (4.0.5)
   - Expecta (1.0.6)
-  - Segment-Adjust (3.1.1-beta):
-    - Adjust (~> 4.28)
+  - Segment-Adjust (3.1.5-beta):
+    - Adjust (~> 4.29.3)
     - Analytics
   - Specta (1.0.7)
 
@@ -26,12 +26,12 @@ EXTERNAL SOURCES:
     :path: "../"
 
 SPEC CHECKSUMS:
-  Adjust: 131c77905f67b26e946d1b831fad20ed2b41134c
+  Adjust: 94f1c99429fb2a7ebe530294fd66a88d63a54922
   Analytics: 4bcf052c91e1f3339219e83d6a036fb2bd7c218d
   Expecta: 3b6bd90a64b9a1dcb0b70aa0e10a7f8f631667d5
-  Segment-Adjust: a47acd37763ccfe1312ae7f6cf8b250598a45be3
+  Segment-Adjust: b69424bdb7d50c9a8b7eb165ed8ea83f3a790353
   Specta: 3e1bd89c3517421982dc4d1c992503e48bd5fe66
 
 PODFILE CHECKSUM: 6057868ba6813120a3ab5ffee3b33af7e280bbd5
 
-COCOAPODS: 1.10.0
+COCOAPODS: 1.11.3
